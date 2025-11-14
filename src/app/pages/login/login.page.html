@@ -1,0 +1,82 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Mistura, Dona!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding">
+  <div class="login-container">
+    <div class="logo-area">
+      <h1 class="app-title">Mistura, Dona!</h1>
+      <p class="app-subtitle">Verificador de Segurança para Limpeza</p>
+    </div>
+
+    <ion-card class="login-card">
+      <ion-card-header>
+        <ion-card-title>Bem-vinda!</ion-card-title>
+        <ion-card-subtitle>Comece a verificar suas misturas agora</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+          <ion-list>
+            <ion-item>
+              <ion-label position="stacked">E-mail</ion-label>
+              <ion-input 
+                type="email" 
+                [(ngModel)]="email" 
+                name="email" 
+                required
+                placeholder="seu@email.com">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Senha</ion-label>
+              <ion-input 
+                [type]="mostrarSenha ? 'text' : 'password'" 
+                [(ngModel)]="password" 
+                name="password" 
+                required
+                placeholder="Sua senha">
+              </ion-input>
+              <ion-button 
+                fill="clear" 
+                slot="end"
+                (click)="toggleSenha()"
+                type="button"
+                style="--padding-start: 0; --padding-end: 0;">
+                <ion-icon [name]="mostrarSenha ? 'eye' : 'eye-off'" style="font-size: 20px;"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-list>
+
+          <ion-button 
+            expand="block" 
+            type="submit" 
+            [disabled]="!loginForm.valid" 
+            color="primary">
+            Entrar
+          </ion-button>
+        </form>
+
+        <div class="divider">OU</div>
+
+        <ion-button 
+          expand="block" 
+          fill="outline" 
+          (click)="entrarComDemo()"
+          color="primary">
+          <ion-icon name="play"></ion-icon>
+          Demonstração
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="info-box">
+      <ion-icon name="shield-checkmark"></ion-icon>
+      <p>Verificação 100% local e segura</p>
+      <p class="subtitle">Sem dados armazenados na nuvem</p>
+    </div>
+  </div>
+</ion-content>

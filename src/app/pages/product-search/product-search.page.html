@@ -1,0 +1,98 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Mistura, Dona!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding">
+  <div class="container">
+    <div class="header-section">
+      <h1 class="app-title">Mistura, Dona!</h1>
+      <p class="app-subtitle">Verificador de Segurança para Limpeza</p>
+    </div>
+
+    <ion-card class="verificador-card">
+      <ion-card-header>
+        <ion-card-title>Verificador de Misturas</ion-card-title>
+        <ion-card-subtitle>Selecione dois produtos para verificar compatibilidade</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked" color="primary">Primeiro Produto</ion-label>
+            <ion-select 
+              [(ngModel)]="produto1" 
+              interface="action-sheet" 
+              placeholder="Selecione..."
+              okText="Escolher"
+              cancelText="Cancelar">
+              <ion-select-option *ngFor="let produto of produtos" [value]="produto.id">
+                {{ produto.nome }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked" color="primary">Segundo Produto</ion-label>
+            <ion-select 
+              [(ngModel)]="produto2" 
+              interface="action-sheet" 
+              placeholder="Selecione..."
+              okText="Escolher"
+              cancelText="Cancelar">
+              <ion-select-option *ngFor="let produto of produtos" [value]="produto.id">
+                {{ produto.nome }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-button 
+          expand="block" 
+          (click)="verificarMistura()" 
+          [disabled]="!produto1 || !produto2 || carregando"
+          class="ion-margin-top"
+          color="primary">
+          <ion-spinner *ngIf="carregando" name="crescent"></ion-spinner>
+          {{ carregando ? 'Verificando...' : 'Verificar Mistura' }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Resultado Seguro -->
+    <ion-card *ngIf="resultado && resultado.seguro" class="resultado-seguro">
+      <ion-card-header>
+        <div class="resultado-header seguro">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          <ion-card-title>{{ resultado.mensagem }}</ion-card-title>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="motivo">{{ resultado.motivo }}</p>
+        <ion-button expand="block" fill="outline" (click)="limparResultado()">
+          Nova Verificação
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Resultado Perigoso -->
+    <ion-card *ngIf="resultado && !resultado.seguro" class="resultado-perigoso">
+      <ion-card-header>
+        <div class="resultado-header perigoso">
+          <ion-icon name="alert-circle" color="danger"></ion-icon>
+          <ion-card-title>{{ resultado.mensagem }}</ion-card-title>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="aviso-texto">
+          <p class="motivo"><strong>Motivo:</strong> {{ resultado.motivo }}</p>
+          <p class="conselho">⚠️ <strong>Não misture estes produtos!</strong></p>
+        </div>
+        <ion-button expand="block" fill="outline" (click)="limparResultado()">
+          Nova Verificação
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
