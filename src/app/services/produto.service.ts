@@ -1,10 +1,13 @@
+// Serviço central do app: contém a base de dados dos produtos e a lógica de verificação das misturas
 import { Injectable } from '@angular/core';
 
+// Interface para componentes químicos de cada produto
 export interface Componente {
   nome: string;
   formula: string;
 }
 
+// Interface para cada produto de limpeza
 export interface Produto {
   id: number;
   nome: string;
@@ -13,6 +16,7 @@ export interface Produto {
   advertencias: string[];
 }
 
+// Interface do resultado da verificação
 export interface ResultadoMistura {
   seguro: boolean;
   mensagem: string;
@@ -23,7 +27,6 @@ export interface ResultadoMistura {
   providedIn: 'root'
 })
 export class ProdutoService {
-  
   // Base de dados de produtos com seus componentes químicos
   private produtos: Produto[] = [
     {

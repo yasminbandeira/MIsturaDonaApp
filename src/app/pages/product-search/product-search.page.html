@@ -1,16 +1,20 @@
+<!-- Cabeçalho do app, mostra o nome do projeto -->
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <ion-title>Mistura, Dona!</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<!-- Conteúdo principal do app -->
 <ion-content [fullscreen]="true" class="ion-no-padding">
   <div class="container">
+    <!-- Seção de título e subtítulo -->
     <div class="header-section">
       <h1 class="app-title">Mistura, Dona!</h1>
       <p class="app-subtitle">Verificador de Segurança para Limpeza</p>
     </div>
 
+    <!-- Card principal onde o usuário faz a verificação -->
     <ion-card class="verificador-card">
       <ion-card-header>
         <ion-card-title>Verificador de Misturas</ion-card-title>
@@ -18,9 +22,11 @@
       </ion-card-header>
 
       <ion-card-content>
+        <!-- Barra de busca: seleção dos produtos -->
         <ion-list>
           <ion-item>
             <ion-label position="stacked" color="primary">Primeiro Produto</ion-label>
+            <!-- Select dinâmico: lista todos os produtos disponíveis -->
             <ion-select 
               [(ngModel)]="produto1" 
               interface="action-sheet" 
@@ -35,6 +41,7 @@
 
           <ion-item>
             <ion-label position="stacked" color="primary">Segundo Produto</ion-label>
+            <!-- Select dinâmico: lista todos os produtos disponíveis -->
             <ion-select 
               [(ngModel)]="produto2" 
               interface="action-sheet" 
@@ -48,19 +55,21 @@
           </ion-item>
         </ion-list>
 
+        <!-- Botão para iniciar a verificação -->
         <ion-button 
           expand="block" 
           (click)="verificarMistura()" 
           [disabled]="!produto1 || !produto2 || carregando"
           class="ion-margin-top"
           color="primary">
+          <!-- Spinner de carregamento -->
           <ion-spinner *ngIf="carregando" name="crescent"></ion-spinner>
           {{ carregando ? 'Verificando...' : 'Verificar Mistura' }}
         </ion-button>
       </ion-card-content>
     </ion-card>
 
-    <!-- Resultado Seguro -->
+    <!-- Card de resultado seguro -->
     <ion-card *ngIf="resultado && resultado.seguro" class="resultado-seguro">
       <ion-card-header>
         <div class="resultado-header seguro">
@@ -70,13 +79,14 @@
       </ion-card-header>
       <ion-card-content>
         <p class="motivo">{{ resultado.motivo }}</p>
+        <!-- Botão para nova verificação -->
         <ion-button expand="block" fill="outline" (click)="limparResultado()">
           Nova Verificação
         </ion-button>
       </ion-card-content>
     </ion-card>
 
-    <!-- Resultado Perigoso -->
+    <!-- Card de resultado perigoso -->
     <ion-card *ngIf="resultado && !resultado.seguro" class="resultado-perigoso">
       <ion-card-header>
         <div class="resultado-header perigoso">
@@ -89,6 +99,7 @@
           <p class="motivo"><strong>Motivo:</strong> {{ resultado.motivo }}</p>
           <p class="conselho">⚠️ <strong>Não misture estes produtos!</strong></p>
         </div>
+        <!-- Botão para nova verificação -->
         <ion-button expand="block" fill="outline" (click)="limparResultado()">
           Nova Verificação
         </ion-button>
